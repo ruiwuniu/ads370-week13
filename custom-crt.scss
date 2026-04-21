@@ -1,0 +1,423 @@
+/*-- scss:defaults --*/
+
+$presentation-font-size-root: 36px;
+$body-bg: #0a0a0a;
+$body-color: #c0c0c0;
+$link-color: #00ffff;
+$code-color: #ffbf00;
+$code-bg: rgba(255, 191, 0, 0.08);
+
+/*-- scss:rules --*/
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Fira+Code:wght@400;700&display=swap');
+
+:root {
+  --crt-green: #00ff41;
+  --crt-cyan: #00ffff;
+  --crt-amber: #ffbf00;
+  --crt-bg: #0a0a0a;
+  --crt-dim: #00cc33;
+  --crt-glow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+.reveal {
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  color: #c0c0c0;
+  background-color: var(--crt-bg);
+}
+
+/* CRT Scanline overlay */
+.reveal::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 9990;
+}
+
+/* Pixel noise grain */
+.reveal .slides {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: 'VT323', monospace;
+  color: var(--crt-green);
+  text-shadow: var(--crt-glow);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.reveal h2::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+  margin-left: 8px;
+  color: var(--crt-green);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Highlighted key terms */
+.glow {
+  background: rgba(0, 255, 65, 0.15);
+  padding: 2px 8px;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 3px;
+  color: var(--crt-green);
+  text-shadow: var(--crt-glow);
+}
+
+.amber {
+  color: var(--crt-amber);
+  text-shadow: 0 0 10px rgba(255, 191, 0, 0.5);
+}
+
+.cyan {
+  color: var(--crt-cyan);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Logo positioning — Quarto built-in logo */
+.slide-logo {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  height: 55px;
+  opacity: 0.85;
+}
+
+/* Override Quarto's default reveal logo placement */
+.reveal .slide-logo {
+  height: 55px !important;
+  max-width: none !important;
+}
+
+/* ── Slide flex layout: push .citation to bottom ── */
+.reveal .slides section {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Citation style — sits at the very bottom of each slide */
+.citation {
+  font-size: 0.45em;
+  color: #555;
+  margin-top: auto;          /* pushes citation to the bottom of the flex container */
+  padding: 6px 0 2px 0;
+  width: 100%;               /* span full slide width */
+  border-top: 1px solid rgba(0,255,65,0.15);
+  font-family: 'Fira Code', monospace;
+  flex-shrink: 0;            /* never collapse citation height */
+}
+
+/* Image placeholder */
+.img-placeholder {
+  border: 2px dashed var(--crt-green);
+  padding: 40px;
+  text-align: center;
+  color: var(--crt-dim);
+  font-family: 'VT323', monospace;
+  background: rgba(0, 255, 65, 0.03);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video embed container */
+.video-container {
+  position: relative;
+  width: 75%;
+  padding-bottom: 42%;
+  margin: 20px auto;
+  border: 1px solid var(--crt-green);
+  box-shadow: var(--crt-glow);
+}
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* Section divider slides */
+.section-divider {
+  text-align: center;
+}
+.section-divider h2 {
+  font-size: 2.5em;
+  border-bottom: 3px solid var(--crt-green);
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+/* Code annotation */
+.code-note {
+  font-size: 0.6em;
+  color: var(--crt-dim);
+  font-style: italic;
+}
+
+/* Comparison tables */
+.reveal table {
+  border-collapse: collapse;
+  font-size: 0.65em;
+  width: 100%;
+}
+.reveal table th {
+  background: rgba(0, 255, 65, 0.15);
+  color: var(--crt-green);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  padding: 8px 12px;
+}
+.reveal table td {
+  border: 1px solid rgba(0, 255, 65, 0.15);
+  padding: 6px 12px;
+  color: #b0b0b0;
+}
+
+/* Formula boxes */
+.formula-box {
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 6px;
+  padding: 20px 30px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+/* Two-column layout (legacy class — kept for compatibility) */
+.columns-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+/* Quarto native columns — override defaults for CRT theme */
+.reveal .columns {
+  gap: 30px;
+}
+.reveal .column {
+  vertical-align: top;
+}
+
+/* Progress bar style */
+.reveal .progress {
+  background: rgba(0, 255, 65, 0.1);
+  color: var(--crt-green);
+}
+
+/* Slide numbers */
+.reveal .slide-number {
+  font-family: 'VT323', monospace;
+  color: var(--crt-green);
+  font-size: 0.7em;
+}
+
+/* Lists */
+.reveal ul li, .reveal ol li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.reveal ul li::marker {
+  color: var(--crt-green);
+}
+
+/* Blockquotes */
+.reveal blockquote {
+  border-left: 4px solid var(--crt-green);
+  background: rgba(0, 255, 65, 0.05);
+  padding: 15px 20px;
+  font-style: normal;
+  color: #c0c0c0;
+}
+
+/* Inline code */
+.reveal code {
+  font-family: 'Fira Code', monospace;
+  color: var(--crt-amber);
+  background: rgba(255, 191, 0, 0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Terminal-style box */
+.terminal-box {
+  background: rgba(0, 255, 65, 0.04);
+  border: 1px solid rgba(0, 255, 65, 0.25);
+  border-radius: 4px;
+  padding: 16px 20px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7em;
+  color: #00cc33;
+  margin: 10px 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Roadmap / timeline items */
+.roadmap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+  padding: 10px 16px;
+  background: rgba(0, 255, 65, 0.04);
+  border-left: 3px solid var(--crt-green);
+}
+
+.roadmap-item .step-num {
+  font-family: 'VT323', monospace;
+  font-size: 1.4em;
+  color: var(--crt-green);
+  min-width: 36px;
+  text-shadow: var(--crt-glow);
+}
+
+.roadmap-item .step-content {
+  flex: 1;
+}
+
+/* Info box */
+.info-box {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  border-radius: 4px;
+  padding: 14px 18px;
+  color: #c0c0c0;
+  margin: 10px 0;
+}
+
+/* Warning / highlight box */
+.warn-box {
+  background: rgba(255, 191, 0, 0.07);
+  border: 1px solid rgba(255, 191, 0, 0.3);
+  border-radius: 4px;
+  padding: 14px 18px;
+  color: #c0c0c0;
+  margin: 10px 0;
+}
+
+/* Three-column layout */
+.columns-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Stat callout */
+.stat-callout {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 6px;
+}
+
+.stat-callout .stat-value {
+  font-family: 'VT323', monospace;
+  font-size: 3em;
+  color: var(--crt-green);
+  text-shadow: var(--crt-glow);
+  display: block;
+}
+
+.stat-callout .stat-label {
+  font-size: 0.65em;
+  color: #888;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Scrollable slides */
+.reveal .slides section {
+  overflow-y: auto !important;
+  max-height: 100% !important;
+}
+
+/* Ensure code blocks scroll horizontally if needed */
+.reveal pre {
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* MathJax color overrides */
+.MathJax {
+  color: #a0e8a0 !important;
+}
+
+mjx-container {
+  color: #a0e8a0;
+}
+
+/* ========================================================== */
+/* Quarto Live (WebR) — CRT-themed overrides                  */
+/* ========================================================== */
+.reveal .qwebr-editor,
+.reveal .qwebr-output-code-area,
+.reveal .qwebr-output-code-stdout,
+.reveal .qwebr-output-code-stderr,
+.reveal .qwebr-output-code-graph-container {
+  background: #0a0a0a !important;
+  color: #00ff41 !important;
+  font-family: 'Fira Code', 'Share Tech Mono', monospace !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 4px !important;
+  font-size: 0.75em !important;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.25);
+}
+
+.reveal .qwebr-button-run,
+.reveal .qwebr-button-reset,
+.reveal .qwebr-button-copy,
+.reveal .qwebr-button-show-hints,
+.reveal .qwebr-button-show-solution {
+  background: #0a0a0a !important;
+  color: #00ff41 !important;
+  border: 1px solid #00ff41 !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 1em !important;
+  padding: 3px 10px !important;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.reveal .qwebr-button-run:hover,
+.reveal .qwebr-button-reset:hover,
+.reveal .qwebr-button-copy:hover {
+  background: #00ff41 !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 10px #00ff41;
+}
+
+.reveal .qwebr-status-text,
+.reveal .qwebr-status-light {
+  color: #ffbf00 !important;
+  font-family: 'Share Tech Mono', monospace !important;
+}
+
+/* Monaco editor background inside Quarto Live */
+.reveal .monaco-editor,
+.reveal .monaco-editor .margin,
+.reveal .monaco-editor .monaco-editor-background {
+  background: #0a0a0a !important;
+}
+
+/* WebR output plot — invert default white bg to CRT-dark */
+.reveal .qwebr-output-code-graph img {
+  background: #fff;
+  border: 1px solid #00ff41;
+  border-radius: 2px;
+}
